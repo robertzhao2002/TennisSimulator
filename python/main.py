@@ -42,10 +42,10 @@ def get_set_score(winner, current_state):
         )
 
 
-def win_serve_probability(p1_service, p_win_on_serve):
+def win_serve_probability(p1_service, p1_win_on_serve, p2_win_on_serve):
     if p1_service:
-        return p_win_on_serve
-    return 1 - p_win_on_serve
+        return p1_win_on_serve
+    return 1 - p2_win_on_serve
 
 
 def display_score(state, p1_name, p2_name):
@@ -103,14 +103,17 @@ def next(state, winner):
     return current_state
 
 
-def simulate(p1_name, p2_name):
+def simulate(p1_name, p2_name, p1_serve_win_prob, p2_serve_win_prob):
     state = initial_state()
     while state["p1"]["sets"] < 3 and state["p2"]["sets"] < 3:
         display_score(state, p1_name, p2_name)
         input()
         point_winner = (
             "p1"
-            if random.random() < win_serve_probability(state["p1_serving"], 0.7)
+            if random.random()
+            < win_serve_probability(
+                state["p1_serving"], p1_serve_win_prob, p2_serve_win_prob
+            )
             else "p2"
         )
         state = next(state, point_winner)
@@ -119,4 +122,4 @@ def simulate(p1_name, p2_name):
 
 
 if __name__ == "__main__":
-    simulate("P1", "P2")
+    simulate(p1_name="P1", p2_name="P2", p1_serve_win_prob=0.7, p2_serve_win_prob=0.7)
