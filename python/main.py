@@ -1,5 +1,5 @@
-import random
 import copy
+import secrets
 
 
 def initial_state():
@@ -110,7 +110,7 @@ def simulate(p1_name, p2_name, p1_serve_win_prob, p2_serve_win_prob):
         input()
         point_winner = (
             "p1"
-            if random.random()
+            if secrets.SystemRandom().random()
             < win_serve_probability(
                 state["p1_serving"], p1_serve_win_prob, p2_serve_win_prob
             )
